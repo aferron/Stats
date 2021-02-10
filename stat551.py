@@ -58,7 +58,6 @@ def dot_plot():
 
 
 
-
 # create a stem and leaf plot and save as a pdf
 def stem_leaf(data):
     #y = pd.Series(data)
@@ -180,7 +179,9 @@ def basic_stats(data):
     print("low median:", statistics.median_low(data))
     print("high median:", statistics.median_high(data))
     print("mode:", statistics.mode(data))
-    print("quantiles:", quantiles(data))
+    quarts = quartiles(data)
+    print("quartiles:", quarts)
+    print("IQR:", quarts[2] - quarts[0])
     print("sample variance numerator:", sample_variance_numerator(data))
     print("sample variance:", sample_variance(data))
 
@@ -294,8 +295,8 @@ def pmf_neg_binom_dist(x, r, p):
 # p: probability of success
 def cdf_neg_binom_dist(x, r, p):
     p_x = scipy.stats.nbinom.cdf(x, r, p)
-    print("in a negative binomial distribution, the probability of getting at least", x, " failures before getting ",
-            r, " successes  where the probability of success is ", p, " is: ", p_x)
+    print("in a negative binomial distribution, the probability of getting *up to* (<=) ", x,
+            " failures before getting ", r, " successes  where the probability of success is ", p, " is: ", p_x)
     return p_x
 
 
@@ -305,7 +306,7 @@ def cdf_neg_binom_dist(x, r, p):
 # p: probability of success
 def neg_binom_dist_stats(r, p):
     print("\nnegative binom dist stats: ")
-    mean, var = scipy.stats.nbinom.stats(4, .6, moments='mv')
+    mean, var = scipy.stats.nbinom.stats(r, p, moments='mv')
     print("expected value/mean: ", mean, "\nvariance: ", var, "\n")
 
 
@@ -354,8 +355,7 @@ def poisson_cdf(mu, nu, ou, x):
 
 # poisson stats
 # mu: mean
-# x: number of occurrences
-def poisson_stats(mu, x):
+def poisson_stats(mu):
     mean, var = scipy.stats.poisson.stats(mu, moments='mv')
     print("\npoisson stats:")
     print("mean", mean, "\nvariance", var)
@@ -402,6 +402,7 @@ def hypergeometric_variance(N, M, n):
     v_x = A * B * C * D
     print("variance of hypergeometric distribution in a subset of size ", n, " where the population size is ", N,
             " and the number of successes is ", M, " is: ", v_x)
+    return v_x
 
 
 
@@ -428,6 +429,90 @@ def hypergeometric_dist_plot(N, M, n):
 
 
 
+#3
+# x: number of successes in the sample that you want to find the prob. for
+# N: population size
+# n: sample size
+# M: # of successes in the population
+#a = hypergeometric_dist(1000, 103, 10, 0)
+#b = hypergeometric_dist(1000, 103, 10, 1)
+#c = hypergeometric_dist(1000, 103, 10, 2)
 
-poisson_pmf(30, .3333, 1, 5)
+#print("P(X <=2) =  ", a + b + c)
+
+#hypergeometric_mean(1000, 103, 10)
+#print(math.sqrt(hypergeometric_variance(1000, 103, 10)))
+
+#correct:
+# calculates the binomial dist for P(X <= x)
+# n: # of trials
+# x: # of successes
+# p: probability of success
+#cdf_binomial_dist(10, .103, 2)
+#binomial_dist_stats(10, .103)
+
+#4
+#print(combination(6,3) / combination(12,3))
+
+#5
+#poisson_pmf(20, 1, 100, 2)
+#poisson_cdf(20, 1, 100, 2)
+#poisson_stats(.2 * 30)
+#print(math.sqrt(6))
+
+#6
+#b
+#print(combination(5,1))
+#print(combination(5,1) * .04 * pow(0.8,4))
+#pmf_neg_binom_dist(4, 2, .2)
+#correct:
+#print(combination(3,1) * .04 * pow(0.8,2))
+#pmf_neg_binom_dist(2, 2, .2)
+
+#c
+#cdf = cdf_neg_binom_dist(4, 2, .2)
+#print("P(X<=4) = ", 1 - cdf)
+#correct
+#cdf = cdf_neg_binom_dist(2, 2, .2)
+
+#d
+#neg_binom_dist_stats(2, .2)
+
+#7
+#a
+#cdf_binomial_dist(25, .25, 6)
+#b
+#pmf_binomial_dist(25, .25, 6)
+#c
+#print(1 - cdf_binomial_dist(25, .25, 5))
+#d
+#print(1 - cdf_binomial_dist(25, .25, 6))
+
+#8
+#a
+#poisson_pmf(4, 2, 1, 10)
+#b
+#print(scipy.stats.poisson.pmf(0, 2))
+#c
+#poisson_stats(2)
+
+#9
+#a
+data = [72, 74, 75, 78, 78, 85, 88, 93, 98, 114]
+#stem_leaf(data)
+#b
+basic_stats(data)
+
+#12
+#print(combination(20,5))
+
+#13
+#print(permutation(10, 3))
+
+#14
+#print(combination(9,3) * combination(8,2))
+
+
+
+
 
