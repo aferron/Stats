@@ -145,19 +145,22 @@ def boxplot(data):
 
 # enter the data as a list and the percentile you'd like to find
 def percentile(data, p):
+    data.sort()
     n = len(data)
-    c = float((n * p) / 100)
+    c = float((n * p) / 100) - 1
     value = 0
 
-    if(c != math.floor(c)):
-        c = math.ceil(c) - 1
+    if c != math.floor(c):
+        c = int(math.ceil(c))
+        value = data[c]
+    elif c == 0:
         value = data[c]
     else:
         c = int(c)
-        if c != (n + 1):
-            value = (data[c - 1] + data[c]) / 2
+        if c != (n):
+            value = (data[c] + data[c + 1]) / 2
         else:
-            value = data[c - 1]
+            value = data[c]
 
     return value
 
@@ -182,8 +185,7 @@ def basic_stats(data):
     quarts = quartiles(data)
     print("quartiles:", quarts)
     print("IQR:", quarts[2] - quarts[0])
-    print("sample variance numerator:", sample_variance_numerator(data))
-    print("sample variance:", sample_variance(data))
+    print("sample variance check:", sample_variance(data))
 
 
 
@@ -347,7 +349,7 @@ def poisson_pmf(mu, nu, ou, x):
 def poisson_cdf(mu, nu, ou, x):
     new_mu = new_mean(mu, nu, ou)
     p_x = scipy.stats.poisson.cdf(x, new_mu)
-    print("probability of having *at least* ", x, " occurrences over a time of ", nu, " time units ",
+    print("probability of having *at most* ", x, " occurrences over a time of ", nu, " time units ",
             "at a rate of ", mu, " per ", ou, " time units is: ", p_x)
     return p_x
 
@@ -498,10 +500,10 @@ def hypergeometric_dist_plot(N, M, n):
 
 #9
 #a
-data = [72, 74, 75, 78, 78, 85, 88, 93, 98, 114]
+#data = [72, 74, 75, 78, 78, 85, 88, 93, 98, 114]
 #stem_leaf(data)
 #b
-basic_stats(data)
+#basic_stats(data)
 
 #12
 #print(combination(20,5))
@@ -512,6 +514,42 @@ basic_stats(data)
 #14
 #print(combination(9,3) * combination(8,2))
 
+#practice
+#poisson_pmf(1, 1, 1, 2)
+
+#poisson_stats(20)
+
+
+#1
+#data = [425, 251, 510, 395, 430, 285, 375, 415, 445, 389]
+#stem_leaf(data)
+#basic_stats(data)
+#print("Q2:", percentile(data, 50))
+
+#4
+#a
+# mu: old mean
+# nu: new units
+# ou: old units
+# x: number of occurrences
+# x being 6, where the question is
+# what is the probability that exactly 6 cars arrive between 12 - 12:05pm?
+# if there's no need for a new mu, enter 1 for nu and ou
+#poisson_cdf(14, .2, 1, 0)
+#print(1 - scipy.stats.poisson.cdf(0, 2.8))
+#b
+#poisson_stats(2.8)
+
+#5
+# x: # of failures before the rth success
+# r: # of successes
+# p: probability of success
+#pmf_neg_binom_dist(4, 12, .65)
+
+#8
+# n: # of trials
+# p: probability of success
+#binomial_dist_stats(24, .20)
 
 
 
