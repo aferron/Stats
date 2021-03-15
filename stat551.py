@@ -44,6 +44,7 @@ def dot_plot():
 
     fig.add_trace(go.Scatter(
         x=[92, 94, 100, 107, 112, 114, 114, 118, 119, 124, 131, 137, 141, 151, 152, 165],
+
         y=schools,
         marker=dict(color="gold", size=12),
         mode="markers",
@@ -426,5 +427,53 @@ def hypergeometric_dist_plot(N, M, n):
    ax.set_xlabel('# of dogs in our group of chosen animals')
    ax.set_ylabel('hypergeom PMF')
    plt.show()
+
+# from notes 3.3 page 13
+# using all args in norm.cdf(x, loc, scale)
+# x: as in P(X > 51)
+# loc: as in mu = 50
+# scale: as in standard deviation / sqrt(sample size), or
+# sigma = 2, in a sample of 20 3rd graders,
+# scale = 2/math.sqrt(20)
+# print(1 - scipy.stats.norm.cdf(51, 50, 2/math.sqrt(20)))
+# after normalizing, just the first arg can be used
+# as in P(z > (51 - 50) / (2/sqrt(20))) = P(z > 2.24)
+# print(1 - scipy.stats.norm.cdf(2.24))
+# the results are slightly different
+
+# print(1 - scipy.stats.norm.cdf(2.5))
+#print(1 - scipy.stats.norm.cdf(51, 50, 1.2/math.sqrt(40)))
+#print(1 - scipy.stats.norm.cdf(5.2705))
+
+#print(1 - scipy.stats.norm.cdf(4000, 4260, 900/math.sqrt(50)))
+#print(scipy.stats.norm.cdf((4000-4260)/(900/math.sqrt(50))))
+
+# find the z value for percentiles
+# Find the 70th percentile of the commute time for employees
+# 70th percentile  mu + z * sigma
+# z:
+#print(scipy.stats.norm.ppf(.7))
+# 70th percentile:
+#print(20.4 + scipy.stats.norm.ppf(.7)*4.2)
+# get the minimum of the top 5%:
+#print(20.4 + scipy.stats.norm.ppf(.95)*4.2)
+#print(30 + scipy.stats.norm.ppf(0.9)*8.2)
+
+# for normal distribution
+# with z calculated for normalized calculation:
+#print(1 - scipy.stats.norm.cdf(2.6666667))
+# or args are (x, mu, sigma)
+#print(1 - scipy.stats.norm.cdf(308, 268, 15))
+
+#print(scipy.stats.norm.ppf(.9))
+
+#print(2.8 + scipy.stats.norm.ppf(.9) * 0.45)
+
+# gamma distribution
+# this calculates F* with args(x, alpha)
+#print(scipy.stats.gamma.cdf(5,2) - scipy.stats.gamma.cdf(2,2))
+
+
+
 
 
