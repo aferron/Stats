@@ -345,7 +345,8 @@ def hypergeometric_variance(N, M, n):
 # n: sample size
 # M: # of successes in the population
 # not working
-# Error: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
+# Error: Matplotlib is currently using agg, which is a non-GUI backend, 
+# so cannot show the figure.
 def hypergeometric_dist_plot(N, M, n):
     rv = hypergeom(M, n, N)
     x = np.arange(0, n+1)
