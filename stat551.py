@@ -1,4 +1,5 @@
-# practice problems for stat 551
+# Amila Ferron
+# Python for STAT551
 
 import math
 import stemgraphic
@@ -6,65 +7,16 @@ import statistics
 import scipy.stats
 import pandas as pd
 import numpy as np
-#import _tkinter
-import plotly.graph_objects as go
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from PIL import Image
 from scipy.stats import hypergeom
 
-#mpl.use('TkAgg')
-
-# simple test to see if plotting works
-# not working
-# more info here: https://matplotlib.org/3.3.3/api/_as_gen/matplotlib.pyplot.plot.html
-#def check_plot():
-    #fig, ax = plt.plot(x,range(10))
-    #fig.savefig("check_plot.pdf")
-
-
-# doesn't work how I want it to
-# This is the example from plotly
-# https://en.wikipedia.org/wiki/Dot_plot_(statistics)
-# https://plotly.com/python/dot-plots/#basic-dot-plot
-def dot_plot():
-    schools = ["Brown", "NYU", "Notre Dame", "Cornell", "Tufts", "Yale",
-               "Dartmouth", "Chicago", "Columbia", "Duke", "Georgetown",
-               "Princeton", "U.Penn", "Stanford", "MIT", "Harvard"]
-
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=[72, 67, 73, 80, 76, 79, 84, 78, 86, 93, 94, 90, 92, 96, 94, 112],
-        y=schools,
-        marker=dict(color="crimson", size=12),
-        mode="markers",
-        name="Women",
-    ))
-
-    fig.add_trace(go.Scatter(
-        x=[92, 94, 100, 107, 112, 114, 114, 118, 119, 124, 131, 137, 141, 151, 152, 165],
-
-        y=schools,
-        marker=dict(color="gold", size=12),
-        mode="markers",
-        name="Men",
-    ))
-
-    fig.update_layout(title="Gender Earnings Disparity",
-                      xaxis_title="Annual Salary (in thousands)",
-                      yaxis_title="School")
-
-    fig.show()
-
-
 
 # create a stem and leaf plot and save as a pdf
 def stem_leaf(data):
-    #y = pd.Series(data)
-    fig, ax = stemgraphic.stem_graphic(data, scale = 10)
+    fig, ax = stemgraphic.stem_graphic(data, scale=10)
     fig.savefig("stem_leaf.pdf")
-
 
 
 # create histogram
@@ -74,7 +26,7 @@ def histogram(data, bins):
     plt.hist(data, bins)
 
     # in general this could be used
-    #plt.plot(data)
+    # plt.plot(data)
 
     canvas = plt.get_current_fig_manager().canvas
     agg = canvas.switch_backends(FigureCanvasAgg)
@@ -91,7 +43,6 @@ def histogram(data, bins):
     im.show()
 
 
-
 # get the range of a list of data
 def get_range(data):
     maximum = max(data)
@@ -100,7 +51,6 @@ def get_range(data):
     print("max:", maximum, "min:", minimum)
     print(maximum, " - ", minimum, " = ", ran)
     return ran
-
 
 
 # get the numerator for sample variance
@@ -113,13 +63,10 @@ def sample_variance_numerator(data):
     return sigma
 
 
-
 # get the sample variance
 def sample_variance(data):
     size = len(data)
     return sample_variance_numerator(data) / (size - 1)
-
-
 
 
 def boxplot(data):
@@ -140,8 +87,6 @@ def boxplot(data):
 
     # display the image using imagemagick's display tool
     im.show()
-
-
 
 
 # enter the data as a list and the percentile you'd like to find
@@ -166,12 +111,9 @@ def percentile(data, p):
     return value
 
 
-
 # enter the data to get quartiles
 def quartiles(data):
     return [percentile(data, 25), percentile(data, 50), percentile(data, 75)]
-
-
 
 
 def basic_stats(data):
@@ -187,7 +129,6 @@ def basic_stats(data):
     print("quartiles:", quarts)
     print("IQR:", quarts[2] - quarts[0])
     print("sample variance check:", sample_variance(data))
-
 
 
 def box_data(data):
@@ -216,7 +157,6 @@ def box_data(data):
     boxplot(data)
 
 
-
 # n different items are available
 # select k of the n items without replacement
 # order doesn't matter (as in a committee)
@@ -226,13 +166,11 @@ def combination(n, k):
     return numerator / denominator
 
 
-
 # n different items available
 # select k of the n items without replacement
 # order matters (as in a photo)
 def permutation(n, k):
     return math.factorial(n)/math.factorial(n - k)
-
 
 
 # binomial distribution probability for an exact value
@@ -244,7 +182,6 @@ def pmf_binomial_dist(n, p, x):
     print("in a binomial distribution, the probability of getting exactly", x, " successes ",
             " in ", n, " trials where the probability of success is ", p, " is: ", p_x)
     return p_x
-
 
 
 # binomial distribution probability
@@ -263,7 +200,6 @@ def cdf_binomial_dist(n, p, x):
     return p_x
 
 
-
 # binomial distribution stats
 # n: # of trials
 # p: probability of success
@@ -279,7 +215,6 @@ def binomial_dist_stats(n, p):
     print()
 
 
-
 # probability with negative binomial distribution
 # x: # of failures before the rth success
 # r: # of successes
@@ -289,7 +224,6 @@ def pmf_neg_binom_dist(x, r, p):
     print("in a negative binomial distribution, the probability of getting ", x, " failures before getting ",
             r, " successes  where the probability of success is ", p, " is: ", p_x)
     return p_x
-
 
 
 # probability with negative binomial distribution
@@ -303,7 +237,6 @@ def cdf_neg_binom_dist(x, r, p):
     return p_x
 
 
-
 # stats for negative binomial distribution
 # r: # of successes
 # p: probability of success
@@ -313,14 +246,12 @@ def neg_binom_dist_stats(r, p):
     print("expected value/mean: ", mean, "\nvariance: ", var, "\n")
 
 
-
 # new mean
 # om: old mean
 # nu: new units
 # ou: old units
 def new_mean(om, nu, ou):
     return om * (nu / ou)
-
 
 
 # poisson pmf
@@ -334,8 +265,9 @@ def new_mean(om, nu, ou):
 def poisson_pmf(mu, nu, ou, x):
     new_mu = new_mean(mu, nu, ou)
     p_x = scipy.stats.poisson.pmf(x, new_mu)
-    print("probability of having ", x, " occurrences over a time of ", nu, " time units ",
-            "at a rate of ", mu, " per ", ou, " time units is: ", p_x)
+    print("probability of having ", x, " occurrences over a time of ", nu,
+          " time units ", "at a rate of ", mu, " per ", ou,
+          " time units is: ", p_x)
     return p_x
 
 
@@ -350,10 +282,10 @@ def poisson_pmf(mu, nu, ou, x):
 def poisson_cdf(mu, nu, ou, x):
     new_mu = new_mean(mu, nu, ou)
     p_x = scipy.stats.poisson.cdf(x, new_mu)
-    print("probability of having *at most* ", x, " occurrences over a time of ", nu, " time units ",
-            "at a rate of ", mu, " per ", ou, " time units is: ", p_x)
+    print("probability of having *at most* ", x, " occurrences over a time of ", 
+          nu, " time units ",
+          "at a rate of ", mu, " per ", ou, " time units is: ", p_x)
     return p_x
-
 
 
 # poisson stats
@@ -362,7 +294,6 @@ def poisson_stats(mu):
     mean, var = scipy.stats.poisson.stats(mu, moments='mv')
     print("\npoisson stats:")
     print("mean", mean, "\nvariance", var)
-
 
 
 # hypergeometric distribution for a specific x value
@@ -375,10 +306,10 @@ def hypergeometric_dist(N, M, n, x):
     numerator_2 = combination(N - M, n - x)
     denominator = combination(N, n)
     p_x = (numerator_1 * numerator_2) / denominator
-    print("Probability of seeing ", x, " items in a subset of ", n, " items, where the ",
-            "population is ", N, " and the number of successes is ", M, " is: ", p_x)
+    print("Probability of seeing ", x, " items in a subset of ", n,
+          " items, where the ", "population is ", N,
+          " and the number of successes is ", M, " is: ", p_x)
     return p_x
-
 
 
 # hypergeometric mean
@@ -387,10 +318,10 @@ def hypergeometric_dist(N, M, n, x):
 # M: # of successes in the population
 def hypergeometric_mean(N, M, n):
     e_x = (n * M) / N
-    print("mean of hypergeometric dist in a subset of size ", n, " where the population size is ", N,
-            " and the number of successes is ", M, " is: ", e_x)
+    print("mean of hypergeometric dist in a subset of size ", n,
+          " where the population size is ", N,
+          " and the number of successes is ", M, " is: ", e_x)
     return e_x
-
 
 
 # hypergeometric variance
@@ -403,10 +334,10 @@ def hypergeometric_variance(N, M, n):
     C = M / N
     D = 1 - (M / N)
     v_x = A * B * C * D
-    print("variance of hypergeometric distribution in a subset of size ", n, " where the population size is ", N,
-            " and the number of successes is ", M, " is: ", v_x)
+    print("variance of hypergeometric distribution in a subset of size ", n,
+          " where the population size is ", N,
+          " and the number of successes is ", M, " is: ", v_x)
     return v_x
-
 
 
 # hypergeometric distribution using scipy.stats
@@ -416,64 +347,14 @@ def hypergeometric_variance(N, M, n):
 # not working
 # Error: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
 def hypergeometric_dist_plot(N, M, n):
-   rv = hypergeom(M, n, N)
-   x = np.arange(0, n+1)
-   pmf_dogs = rv.pmf(x)
+    rv = hypergeom(M, n, N)
+    x = np.arange(0, n+1)
+    pmf_dogs = rv.pmf(x)
 
-   fig = plt.figure()
-   ax = fig.add_subplot(111)
-   ax.plot(x, pmf_dogs, 'bo')
-   ax.vlines(x, 0, pmf_dogs, lw=2)
-   ax.set_xlabel('# of dogs in our group of chosen animals')
-   ax.set_ylabel('hypergeom PMF')
-   plt.show()
-
-# from notes 3.3 page 13
-# using all args in norm.cdf(x, loc, scale)
-# x: as in P(X > 51)
-# loc: as in mu = 50
-# scale: as in standard deviation / sqrt(sample size), or
-# sigma = 2, in a sample of 20 3rd graders,
-# scale = 2/math.sqrt(20)
-# print(1 - scipy.stats.norm.cdf(51, 50, 2/math.sqrt(20)))
-# after normalizing, just the first arg can be used
-# as in P(z > (51 - 50) / (2/sqrt(20))) = P(z > 2.24)
-# print(1 - scipy.stats.norm.cdf(2.24))
-# the results are slightly different
-
-# print(1 - scipy.stats.norm.cdf(2.5))
-#print(1 - scipy.stats.norm.cdf(51, 50, 1.2/math.sqrt(40)))
-#print(1 - scipy.stats.norm.cdf(5.2705))
-
-#print(1 - scipy.stats.norm.cdf(4000, 4260, 900/math.sqrt(50)))
-#print(scipy.stats.norm.cdf((4000-4260)/(900/math.sqrt(50))))
-
-# find the z value for percentiles
-# Find the 70th percentile of the commute time for employees
-# 70th percentile  mu + z * sigma
-# z:
-#print(scipy.stats.norm.ppf(.7))
-# 70th percentile:
-#print(20.4 + scipy.stats.norm.ppf(.7)*4.2)
-# get the minimum of the top 5%:
-#print(20.4 + scipy.stats.norm.ppf(.95)*4.2)
-#print(30 + scipy.stats.norm.ppf(0.9)*8.2)
-
-# for normal distribution
-# with z calculated for normalized calculation:
-#print(1 - scipy.stats.norm.cdf(2.6666667))
-# or args are (x, mu, sigma)
-#print(1 - scipy.stats.norm.cdf(308, 268, 15))
-
-#print(scipy.stats.norm.ppf(.9))
-
-#print(2.8 + scipy.stats.norm.ppf(.9) * 0.45)
-
-# gamma distribution
-# this calculates F* with args(x, alpha)
-#print(scipy.stats.gamma.cdf(5,2) - scipy.stats.gamma.cdf(2,2))
-
-
-
-
-
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, pmf_dogs, 'bo')
+    ax.vlines(x, 0, pmf_dogs, lw=2)
+    ax.set_xlabel('# of dogs in our group of chosen animals')
+    ax.set_ylabel('hypergeom PMF')
+    plt.show()
